@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Our Bank - Tuyen & Huong</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #DFF3EA;
+    --bg-dot: #c9e9db;
+    --surface: #ffffff;
+    --ink: #3B1F3A;
+    --ink-soft: #6d5470;
+    --pig: #F7A8BE;
+    --pig-dark: #D9718F;
+    --pig-belly: #FFDCE5;
+    --dog: #E8B57A;
+    --dog-dark: #C68A4E;
+    --dog-ear: #9A6036;
+    --dog-belly: #FCEBD5;
+    --dog-shade: #D9A062;
+    --collar: #E2556B;
+    --coin: #F2C14E;
+    --coin-edge: #C9952A;
+    --tuyen: #2E8C83;
+    --tuyen-soft: #d5efec;
+    --huong: #8E5BC6;
+    --huong-soft: #ece2f7;
+    --on-accent: #ffffff;
+    --shadow: rgba(59, 31, 58, 0.14);
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1a26;
+      --bg-dot: #26233a;
+      --surface: #2a2638;
+      --ink: #f6eaf3;
+      --ink-soft: #c3b2c5;
+      --tuyen-soft: #1f3b39;
+      --huong-soft: #352a48;
+      --shadow: rgba(0, 0, 0, 0.4);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1a26;
+    --bg-dot: #26233a;
+    --surface: #2a2638;
+    --ink: #f6eaf3;
+    --ink-soft: #c3b2c5;
+    --tuyen-soft: #1f3b39;
+    --huong-soft: #352a48;
+    --shadow: rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  html, body { min-height: 100%; }
+
+  body {
+    margin: 0;
+    font-family: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background-color: var(--bg);
+    background-image: radial-gradient(var(--bg-dot) 2px, transparent 2px);
+    background-size: 28px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(1.25rem, 4vw, 3rem) 1rem 2rem;
+  }
+
+  h1 {
+    font-family: "Fredoka", "Nunito", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    line-height: 1.1;
+    margin: 0 0 0.35rem;
+    text-align: center;
+  }
+  .subtitle {
+    margin: 0 0 clamp(1.5rem, 4vw, 2.75rem);
+    color: var(--ink-soft);
+    text-align: center;
+    font-size: 1.05rem;
+  }
+
+  .stage {
+    width: 100%;
+    max-width: 1080px;
+    display: grid;
+    grid-template-columns: 1fr minmax(260px, 1.2fr) 1fr;
+    grid-template-areas: "tuyen pig huong";
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  /* ---------- Person panels ---------- */
+  .person {
+    background: var(--surface);
+    border-radius: 28px;
+    padding: 1.5rem 1.25rem 1.4rem;
+    box-shadow: 0 10px 0 var(--accent-soft), 0 18px 30px var(--shadow);
+    border: 3px solid var(--accent);
+    text-align: center;
+  }
+  .person.tuyen { grid-area: tuyen; --accent: var(--tuyen); --accent-soft: var(--tuyen-soft); }
+  .person.huong { grid-area: huong; --accent: var(--huong); --accent-soft: var(--huong-soft); }
+
+  .person h2 {
+    font-family: "Fredoka", "Nunito", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    margin: 0;
+    color: var(--accent);
+  }
+
+  .coin {
+    width: 92px;
+    height: 92px;
+    margin: 1rem auto 0.4rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffe59a, var(--coin) 60%);
+    border: 5px solid var(--coin-edge);
+    display: grid;
+    place-items: center;
+    font-family: "Fredoka", "Nunito", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #7a5310;
+    box-shadow: inset 0 -5px 0 rgba(0,0,0,0.08);
+  }
+  .coin-note {
+    margin: 0 0 1.1rem;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  .qty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.1rem;
+  }
+  .qty button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-family: "Fredoka", "Nunito", system-ui, sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+  .qty button:active { transform: scale(0.92); }
+  .qty button:disabled { opacity: 0.35; cursor: not-allowed; }
+  .qty output {
+    min-width: 3ch;
+    font-family: "Fredoka", "Nunito", system-ui, sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .add-btn {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: none;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-family: "Nunito", system-ui, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.22);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .add-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,0.22); }
+
+  .given {
+    margin: 0.9rem 0 0;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  button:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  /* ---------- Piggy bank ---------- */
+  .pig-wrap {
+    grid-area: pig;
+    position: relative;
+    text-align: center;
+  }
+  .pig-svg {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    overflow: visible;
+  }
+  .pig-svg.wiggle { animation: wiggle 0.5s ease; }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-3deg); }
+    60% { transform: rotate(2.5deg); }
+  }
+  .pig-svg { transform-origin: 50% 85%; }
+  #tail { transform-box: fill-box; transform-origin: 0% 100%; }
+  .pig-svg.wiggle #tail { animation: wag 0.22s ease-in-out 4; }
+  @keyframes wag {
+    0%, 100% { transform: rotate(0); }
+    50% { transform: rotate(-22deg); }
+  }
+
+  .total-label {
+    font-family: "Nunito", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    fill: #3B1F3A;
+    opacity: 0.75;
+  }
+  .total-amount {
+    font-family: "Fredoka", "Nunito", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 46px;
+    fill: #3B1F3A;
+  }
+
+  .falling-coin {
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    width: 40px;
+    height: 40px;
+    margin-left: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffe59a, var(--coin) 60%);
+    border: 3px solid var(--coin-edge);
+    display: grid;
+    place-items: center;
+    font-family: "Fredoka", sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #7a5310;
+    pointer-events: none;
+    animation: drop 0.6s cubic-bezier(.5,0,.9,.6) forwards;
+  }
+  @keyframes drop {
+    0% { transform: translateY(-40px) scale(1); opacity: 0; }
+    20% { opacity: 1; }
+    85% { transform: translateY(16%) scale(0.85); opacity: 1; }
+    100% { transform: translateY(20%) scaleX(0.2); opacity: 0; }
+  }
+
+
+  .share-btn {
+    display: block;
+    margin: 0.5rem auto 0;
+    padding: 0.85rem 1.6rem;
+    border: none;
+    border-radius: 999px;
+    background: var(--pig-dark);
+    color: var(--on-accent);
+    font-family: "Nunito", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    cursor: pointer;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.22);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .share-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,0.22); }
+  .share-btn:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+  .share-hint {
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .share-fallback {
+    margin: 0.9rem auto 0;
+    max-width: 340px;
+    background: var(--surface);
+    border: 2px solid var(--pig-dark);
+    border-radius: 18px;
+    padding: 0.9rem;
+    text-align: left;
+  }
+  .share-fallback[hidden] { display: none; }
+  .share-fallback p { margin: 0 0 0.5rem; font-size: 0.92rem; }
+  .share-fallback textarea {
+    width: 100%;
+    resize: none;
+    border-radius: 10px;
+    border: 2px solid var(--pig-belly);
+    background: var(--bg);
+    color: var(--ink);
+    font: 600 0.95rem/1.4 "Nunito", system-ui, sans-serif;
+    padding: 0.5rem 0.6rem;
+  }
+  .share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+  }
+  .share-actions button, .share-actions a {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 0.6rem 0.9rem;
+    border-radius: 999px;
+    font: 800 0.92rem "Nunito", system-ui, sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .share-actions button { border: none; background: var(--pig-dark); color: var(--on-accent); }
+  .share-actions a { border: 2px solid var(--pig-dark); color: var(--ink); }
+  .share-actions a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+  .sync-status {
+    margin: 0.25rem 0 0.5rem;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    min-height: 1.2em;
+  }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .stage {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "pig pig"
+        "tuyen huong";
+    }
+    .pig-svg { max-width: 320px; }
+  }
+  @media (max-width: 520px) {
+    .stage {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "pig"
+        "tuyen"
+        "huong";
+    }
+    .person { padding: 1.25rem 1rem; }
+    .coin { width: 76px; height: 76px; font-size: 1.7rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pig-svg.wiggle, .pig-svg.wiggle #tail, .falling-coin { animation: none; }
+    .falling-coin { display: none; }
+  }
+</style>
+</head>
+<body>
+  <h1>Our Piggy Bank</h1>
+  <p class="subtitle">Practice English every day, and watch our savings grow, Mom!</p>
+
+  <main class="stage">
+    <!-- Tuyen -->
+    <section class="person tuyen" aria-labelledby="tuyen-name">
+      <h2 id="tuyen-name">Tuyen</h2>
+      <div class="coin" aria-hidden="true">$1</div>
+      <p class="coin-note">Each coin is $1</p>
+      <div class="qty">
+        <button type="button" data-person="tuyen" data-step="-1" aria-label="Fewer coins for Tuyen">−</button>
+        <output id="tuyen-qty" aria-live="polite">1</output>
+        <button type="button" data-person="tuyen" data-step="1" aria-label="More coins for Tuyen">+</button>
+      </div>
+      <button type="button" class="add-btn" data-add="tuyen">Add $1 to our bank</button>
+      <p class="given" id="tuyen-given">Tuyen has added $0</p>
+    </section>
+
+    <!-- Piggy bank -->
+    <div class="pig-wrap" id="pig-wrap">
+      <svg class="pig-svg" id="pig" viewBox="0 0 400 330" role="img" aria-labelledby="pig-title">
+        <title id="pig-title">Piggy bank</title>
+        <!-- shadow -->
+        <ellipse cx="208" cy="314" rx="125" ry="10" fill="var(--shadow)"/>
+        <!-- curly tail -->
+        <path id="tail" d="M336 196 q28 -4 26 -26 q-2 -16 -16 -10 q-12 8 0 18" fill="none" stroke="var(--pig-dark)" stroke-width="7" stroke-linecap="round"/>
+        <!-- stubby legs -->
+        <rect x="112" y="246" width="42" height="58" rx="20" fill="var(--pig-dark)"/>
+        <rect x="166" y="258" width="40" height="50" rx="20" fill="var(--pig-dark)"/>
+        <rect x="224" y="258" width="40" height="50" rx="20" fill="var(--pig-dark)"/>
+        <rect x="278" y="246" width="42" height="58" rx="20" fill="var(--pig-dark)"/>
+        <!-- chubby body -->
+        <ellipse cx="210" cy="190" rx="134" ry="106" fill="var(--pig)"/>
+        <!-- shine -->
+        <ellipse cx="262" cy="118" rx="38" ry="13" transform="rotate(-14 262 118)" fill="#fff" opacity="0.4"/>
+        <!-- ears -->
+        <path d="M106 116 Q92 56 148 90 Z" fill="var(--pig-dark)" stroke="var(--pig-dark)" stroke-width="10" stroke-linejoin="round"/>
+        <path d="M112 106 Q106 74 136 92 Z" fill="#FFB8CB"/>
+        <path d="M152 98 Q160 44 198 88 Z" fill="var(--pig-dark)" stroke="var(--pig-dark)" stroke-width="10" stroke-linejoin="round"/>
+        <path d="M160 92 Q164 62 186 88 Z" fill="#FFB8CB"/>
+        <!-- coin slot -->
+        <rect x="196" y="88" width="60" height="11" rx="5.5" fill="#3B1F3A"/>
+        <!-- snout -->
+        <ellipse cx="80" cy="190" rx="32" ry="36" fill="#F290AC" stroke="var(--pig-dark)" stroke-width="3"/>
+        <ellipse cx="72" cy="177" rx="5" ry="9" fill="#3B1F3A" opacity="0.8"/>
+        <ellipse cx="72" cy="203" rx="5" ry="9" fill="#3B1F3A" opacity="0.8"/>
+        <!-- big shiny eye with lashes -->
+        <path d="M124 134 l-5 -7 M133 131 l0 -9 M142 134 l5 -7" stroke="#3B1F3A" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="133" cy="150" r="13" fill="#3B1F3A"/>
+        <circle cx="137" cy="145" r="5" fill="#fff"/>
+        <circle cx="129" cy="155" r="2" fill="#fff"/>
+        <!-- rosy cheek -->
+        <ellipse cx="142" cy="186" rx="16" ry="9" fill="#FF6F91" opacity="0.45"/>
+        <!-- smile -->
+        <path d="M110 212 q14 14 30 2" fill="none" stroke="#3B1F3A" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- belly panel with total -->
+        <ellipse cx="236" cy="205" rx="82" ry="56" fill="var(--pig-belly)"/>
+        <text x="236" y="184" text-anchor="middle" class="total-label">Total saved</text>
+        <text x="236" y="232" text-anchor="middle" class="total-amount" id="total">$0</text>
+      </svg>
+      <p class="sr-only" aria-live="polite" id="total-announce"></p>
+      <p class="sync-status" id="sync-status"></p>
+      <button type="button" class="share-btn" id="share" disabled>Share to Messenger</button>
+      <p class="share-hint" id="share-hint">Add coins first, then share the news.</p>
+      <div class="share-fallback" id="share-fallback" hidden>
+        <p>Copy this message, then paste it in your chat:</p>
+        <textarea id="share-text" rows="3" readonly aria-label="Message to share"></textarea>
+        <div class="share-actions">
+          <button type="button" id="copy-btn">Copy message</button>
+          <a href="https://www.messenger.com/" target="_blank" rel="noopener">Open Messenger</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Huong -->
+    <section class="person huong" aria-labelledby="huong-name">
+      <h2 id="huong-name">Huong</h2>
+      <div class="coin" aria-hidden="true">$2</div>
+      <p class="coin-note">Each coin is $2</p>
+      <div class="qty">
+        <button type="button" data-person="huong" data-step="-1" aria-label="Fewer coins for Huong">−</button>
+        <output id="huong-qty" aria-live="polite">1</output>
+        <button type="button" data-person="huong" data-step="1" aria-label="More coins for Huong">+</button>
+      </div>
+      <button type="button" class="add-btn" data-add="huong">Add $2 to our bank</button>
+      <p class="given" id="huong-given">Huong has added $0</p>
+    </section>
+  </main>
+
+<script>
+  const MIN = 1, MAX = 99;
+  const people = {
+    tuyen: { name: "Tuyen", value: 1, qty: 1, given: 0 },
+    huong: { name: "Huong", value: 2, qty: 1, given: 0 }
+  };
+  const STORE_KEY = "piggy-bank-v1";
+  let lastMessage = "";
+
+  // Paste your Firebase web config here (Firebase console > Project settings > Your apps).
+  // While it still says PASTE, the total is saved on this device only.
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyB9bRFVeaXsZG90tTiM-k4gJHRduXc3Qd8",
+    authDomain: "piggy-bank-c5d8c.firebaseapp.com",
+    projectId: "piggy-bank-c5d8c",
+    appId: "1:1017888884968:web:d07ea24d5f1382b204e15d"
+  };
+
+  // Load saved amounts (kept in this browser only)
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
+    if (saved) {
+      people.tuyen.given = Number(saved.tuyen) || 0;
+      people.huong.given = Number(saved.huong) || 0;
+    }
+  } catch (e) { /* storage unavailable: start from $0 */ }
+
+  function save() {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({
+        tuyen: people.tuyen.given, huong: people.huong.given
+      }));
+    } catch (e) { /* ignore */ }
+  }
+
+  const fmt = n => "$" + n.toLocaleString("en-US");
+
+  function render() {
+    for (const key of Object.keys(people)) {
+      const p = people[key];
+      document.getElementById(key + "-qty").textContent = p.qty;
+      document.querySelector(`[data-person="${key}"][data-step="-1"]`).disabled = p.qty <= MIN;
+      document.querySelector(`[data-person="${key}"][data-step="1"]`).disabled = p.qty >= MAX;
+      document.querySelector(`[data-add="${key}"]`).textContent =
+        `Add ${fmt(p.qty * p.value)} to piggy bank`;
+      document.getElementById(key + "-given").textContent =
+        `${p.name} has added ${fmt(p.given)}`;
+    }
+    const total = people.tuyen.given + people.huong.given;
+    document.getElementById("total").textContent = fmt(total);
+  }
+
+  document.querySelectorAll("[data-step]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const p = people[btn.dataset.person];
+      p.qty = Math.min(MAX, Math.max(MIN, p.qty + Number(btn.dataset.step)));
+      render();
+    });
+  });
+
+  const pig = document.getElementById("pig");
+  const pigWrap = document.getElementById("pig-wrap");
+
+  function dropCoin(label) {
+    const coin = document.createElement("div");
+    coin.className = "falling-coin";
+    coin.textContent = label;
+    pigWrap.appendChild(coin);
+    coin.addEventListener("animationend", () => coin.remove());
+    setTimeout(() => coin.remove(), 1000);
+    pig.classList.remove("wiggle");
+    void pig.getBoundingClientRect();
+    pig.classList.add("wiggle");
+  }
+
+  document.querySelectorAll("[data-add]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const p = people[btn.dataset.add];
+      const amount = p.qty * p.value;
+      p.given += amount;
+      save();
+      pushToCloud(btn.dataset.add, amount);
+      render();
+      dropCoin("$" + p.value);
+      const newTotal = people.tuyen.given + people.huong.given;
+      lastMessage = `${p.name} added ${fmt(amount)} to our piggy bank 🐷 Total saved: ${fmt(newTotal)}`;
+      document.getElementById("share").disabled = false;
+      document.getElementById("share-hint").textContent = "Tap to send this to your chat.";
+      document.getElementById("share-text").value = lastMessage;
+      document.getElementById("total-announce").textContent =
+        `${p.name} added ${fmt(amount)}. Total saved is ${fmt(people.tuyen.given + people.huong.given)}.`;
+      p.qty = 1;
+      render();
+    });
+  });
+
+
+  // ---------- Share to Messenger ----------
+  const shareFallback = document.getElementById("share-fallback");
+  const shareText = document.getElementById("share-text");
+  const copyBtn = document.getElementById("copy-btn");
+
+  function showFallback() {
+    shareText.value = lastMessage;
+    shareFallback.hidden = false;
+    shareText.focus();
+    shareText.select();
+  }
+
+  document.getElementById("share").addEventListener("click", async () => {
+    if (!lastMessage) return;
+    if (navigator.share) {
+      try {
+        await navigator.share({ text: lastMessage });
+        return;
+      } catch (e) {
+        if (e && e.name === "AbortError") return; // closed the share menu
+      }
+    }
+    showFallback();
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    let ok = false;
+    try {
+      await navigator.clipboard.writeText(shareText.value);
+      ok = true;
+    } catch (e) {
+      shareText.select();
+      try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
+    }
+    copyBtn.textContent = ok ? "Copied" : "Select and copy the text";
+    setTimeout(() => { copyBtn.textContent = "Copy message"; }, 2000);
+  });
+
+  // ---------- Shared total (Firebase) ----------
+  let cloud = null;
+  const syncStatus = document.getElementById("sync-status");
+  function setStatus(t) { if (syncStatus) syncStatus.textContent = t; }
+
+  async function startCloud() {
+    if (!FIREBASE_CONFIG.apiKey || FIREBASE_CONFIG.apiKey.startsWith("PASTE")) {
+      setStatus("Saved on this device only");
+      return;
+    }
+    setStatus("Connecting to the shared bank…");
+    try {
+      const V = "10.12.2";
+      const appMod = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`);
+      const fs = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-firestore.js`);
+      const app = appMod.initializeApp(FIREBASE_CONFIG);
+      const db = fs.getFirestore(app);
+      const ref = fs.doc(db, "banks", "tuyen-huong");
+      cloud = { ref, setDoc: fs.setDoc, increment: fs.increment, serverTimestamp: fs.serverTimestamp };
+      fs.onSnapshot(ref, snap => {
+        const d = snap.exists() ? snap.data() : {};
+        people.tuyen.given = Number(d.tuyen) || 0;
+        people.huong.given = Number(d.huong) || 0;
+        save();
+        render();
+        setStatus("Synced for both of you");
+      }, err => {
+        console.error(err);
+        setStatus("Can’t reach the shared bank. Showing this device’s total.");
+      });
+    } catch (e) {
+      console.error(e);
+      cloud = null;
+      setStatus("Saved on this device only");
+    }
+  }
+
+  async function pushToCloud(key, amount) {
+    if (!cloud) return;
+    try {
+      await cloud.setDoc(
+        cloud.ref,
+        { [key]: cloud.increment(amount), updatedAt: cloud.serverTimestamp() },
+        { merge: true }
+      );
+    } catch (e) {
+      console.error(e);
+      setStatus("Couldn’t save to the shared bank. Check your connection and add again.");
+    }
+  }
+
+  startCloud();
+  render();
+</script>
+</body>
+</html>
